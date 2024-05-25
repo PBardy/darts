@@ -4,4 +4,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen> </ion-content>
+<ion-content fullscreen>
+  <ion-list lines="none">
+    <ion-item routerDirection="forward" routerLink="/games/new">
+      <ion-icon name="add-outline" />
+      <ion-label>New Game</ion-label>
+    </ion-item>
+    <ion-item routerDirection="forward" routerLink="/games">
+      <ion-icon name="refresh-outline" />
+      <ion-label>Resume Game</ion-label>
+    </ion-item>
+    <ion-item routerDirection="forward" routerLink="/players">
+      <ion-icon name="people-outline" />
+      <ion-label>Players</ion-label>
+    </ion-item>
+    <ion-item routerDirection="forward" routerLink="/statistics">
+      <ion-icon name="stats-chart-outline" />
+      <ion-label>Statistics</ion-label>
+    </ion-item>
+    <ion-item routerDirection="forward" routerLink="/settings">
+      <ion-icon name="settings-outline" />
+      <ion-label>Settings</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
