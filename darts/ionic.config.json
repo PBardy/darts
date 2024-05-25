@@ -1,0 +1,7 @@
+{
+  "name": "darts",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
