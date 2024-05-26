@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
@@ -23,4 +23,6 @@ addIcons({
   standalone: true,
   imports: [IonicModule, RouterLink],
 })
-export class HomePage {}
+export class HomePage {
+  router = inject(Router);
+}

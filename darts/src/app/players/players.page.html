@@ -1,10 +1,63 @@
 <ion-header translucent>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="playerStore.selected().length > 0">
+    <ion-title>Selected ({{ playerStore.selected().length }})</ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" (mousedown)="onRemoveSelection()">
+        <ion-icon size="small" slot="icon-only" name="trash-outline" />
+      </ion-button>
+      <ion-button size="small" shape="round" (mousedown)="onCancelSelection()">
+        <ion-icon size="large" slot="icon-only" name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="playerStore.selected().length === 0">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" />
     </ion-buttons>
     <ion-title>Players</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [debounce]="300"
+      [placeholder]="'Search players by name...'"
+      (ionInput)="playerStore.search($event.target.value!.toLowerCase())"
+    />
+  </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen> </ion-content>
+<ion-content fullscreen>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-checkbox
+        *ngIf="playerStore.selected().length > 0"
+        slot="start"
+        (ionChange)="onToggleAll($event.detail.checked)"
+      />
+      <ion-label>
+        Showing {{ playerStore.filtered().length }} of {{
+        playerStore.entities().length }} players
+      </ion-label>
+    </ion-item>
+    <ion-item
+      *ngFor="let player of playerStore.filtered()"
+      (longpress)="onLongPress(player, null)"
+      (shortpress)="onShortPress(player, null)"
+      appPress
+      detail
+      button
+    >
+      <ion-checkbox
+        slot="start"
+        [checked]="playerStore.selected().includes(player.id)"
+        (click)="onLongPress(player, $event)"
+        *ngIf="playerStore.selected().length > 0"
+      />
+      <ion-label>{{ player.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (mousedown)="router.navigate(['players', 'new'])">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
