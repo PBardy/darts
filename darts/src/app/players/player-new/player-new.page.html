@@ -4,7 +4,17 @@
       <ion-back-button defaultHref="/players" />
     </ion-buttons>
     <ion-title>New Player</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (mousedown)="onSubmit()">Add</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen> </ion-content>
+<ion-content fullscreen>
+  <ion-list lines="none" [formGroup]="form">
+    <ion-item>
+      <ion-label slot="start">Name</ion-label>
+      <ion-input slot="end" formControlName="name" />
+    </ion-item>
+  </ion-list>
+</ion-content>
