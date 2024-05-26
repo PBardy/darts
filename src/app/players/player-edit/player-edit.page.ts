@@ -9,8 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { PlayerService } from '@store/player/player.service';
-import { PlayerStore } from '@store/player/player.store';
+import { PlayerService, PlayerStore } from '@store/player';
 
 @Component({
   templateUrl: './player-edit.page.html',

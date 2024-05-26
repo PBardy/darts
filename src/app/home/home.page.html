@@ -5,26 +5,26 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-list lines="none">
+  <ion-list color="none" lines="none">
     <ion-item button detail (mousedown)="router.navigate(['games', 'new'])">
       <ion-icon name="add-outline" />
-      <ion-label>New Game</ion-label>
+      <ion-label class="ion-padding">New Game</ion-label>
     </ion-item>
     <ion-item button detail (mousedown)="router.navigate(['games'])">
       <ion-icon name="refresh-outline" />
-      <ion-label>Resume Game</ion-label>
+      <ion-label class="ion-padding">Resume Game</ion-label>
     </ion-item>
     <ion-item button detail (mousedown)="router.navigate(['players'])">
       <ion-icon name="people-outline" />
-      <ion-label>Players</ion-label>
+      <ion-label class="ion-padding">Players</ion-label>
     </ion-item>
     <ion-item button detail (mousedown)="router.navigate(['statistics'])">
       <ion-icon name="stats-chart-outline" />
-      <ion-label>Statistics</ion-label>
+      <ion-label class="ion-padding">Statistics</ion-label>
     </ion-item>
     <ion-item button detail (mousedown)="router.navigate(['settings'])">
       <ion-icon name="settings-outline" />
-      <ion-label>Settings</ion-label>
+      <ion-label class="ion-padding">Settings</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

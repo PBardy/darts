@@ -9,7 +9,6 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
-  EntityId,
   addEntity,
   removeAllEntities,
   removeEntities,
@@ -20,20 +19,7 @@ import {
 } from '@ngrx/signals/entities';
 import { nanoid } from 'nanoid';
 import { chain } from 'underscore';
-
-export type PlayerStub = {
-  name: string;
-};
-
-export type Player = PlayerStub & {
-  id: string;
-  createdAt: string;
-};
-
-export type PlayerState = {
-  filter: string;
-  selected: EntityId[];
-};
+import { Player, PlayerState, PlayerStub } from './player.models';
 
 const factory = (overrides: Partial<Player> = {}): Player => ({
   id: nanoid(),
@@ -59,36 +45,36 @@ export const PlayerStore = signalStore(
     ),
   })),
   withMethods((s) => ({
-    addOne: (data: PlayerStub) => {
+    addOne(data: PlayerStub) {
       patchState(s, addEntity(factory(data)));
     },
-    setAll: (data: Player[]) => {
+    setAll(data: Player[]) {
       patchState(s, setEntities(data));
     },
-    updateOne: (id: string, changes: Partial<Player>) => {
+    updateOne(id: string, changes: Partial<Player>) {
       patchState(s, updateEntity({ id, changes }));
     },
-    removeOne: (id: string) => {
+    removeOne(id: string) {
       patchState(s, removeEntity(id));
     },
-    removeAll: () => {
+    removeAll() {
       patchState(s, removeAllEntities());
       patchState(s, { selected: [] });
     },
-    removeSelection: () => {
+    removeSelection() {
       patchState(s, removeEntities(s.selected()));
       patchState(s, { selected: [] });
     },
-    search: (filter: string) => {
+    search(filter: string) {
       patchState(s, { filter });
     },
-    toggle: (id: string) => {
+    toggle(id: string) {
       const selected = s.selected();
       const index = selected.indexOf(id);
       index > -1 ? selected.splice(index, 1) : selected.push(id);
       patchState(s, { selected });
     },
-    toggleAll: (state: boolean) => {
+    toggleAll(state: boolean) {
       patchState(s, { selected: state ? s.ids() : [] });
     },
   })),

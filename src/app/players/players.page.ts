@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PressDirective } from '@directives/press/press.directive';
 import { IonicModule } from '@ionic/angular';
-import { Player, PlayerStore } from '@store/player/player.store';
+import { Player, PlayerStore } from '@store/player';
 import { addIcons } from 'ionicons';
 import {
   addOutline,

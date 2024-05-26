@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { PlayerStore } from '@store/player/player.store';
+import { PlayerStore } from '@store/player';
 
 @Component({
   templateUrl: './player-new.page.html',
@@ -25,7 +25,9 @@ export class PlayerNewPage {
   });
 
   onSubmit() {
-    this.playerStore.addOne(this.form.getRawValue());
-    this.router.navigate(['players']);
+    if (this.form.valid) {
+      this.playerStore.addOne(this.form.getRawValue());
+      this.router.navigate(['players']);
+    }
   }
 }

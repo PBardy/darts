@@ -4,7 +4,73 @@
       <ion-back-button defaultHref="/home" />
     </ion-buttons>
     <ion-title>New Game</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (mousedown)="onSubmit()">Start</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen> </ion-content>
+<ion-content fullscreen>
+  <form [formGroup]="form">
+    <ion-item-group formGroupName="config">
+      <ion-item lines="none">
+        <ion-label class="ion-text-uppercase"> Config </ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label slot="start">Sets</ion-label>
+        <ion-input
+          class="ion-text-right"
+          slot="end"
+          name="sets"
+          formControlName="sets"
+        />
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label slot="start">Legs</ion-label>
+        <ion-input
+          class="ion-text-right"
+          slot="end"
+          name="legs"
+          formControlName="legs"
+        />
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label slot="start">Target</ion-label>
+        <ion-input
+          class="ion-text-right"
+          slot="end"
+          name="target"
+          formControlName="target"
+        />
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group formGroupName="players">
+      <ion-item lines="none">
+        <ion-label class="ion-text-uppercase">Players</ion-label>
+        <ion-button
+          class="ion-no-padding ion-no-margin"
+          color="dark"
+          fill="clear"
+          slot="end"
+          (mousedown)="onAdd()"
+        >
+          <ion-icon icon="icons-only" name="add-outline" />
+        </ion-button>
+      </ion-item>
+      <ion-item-sliding
+        *ngFor="let entry of players.controls | keyvalue; let i = index"
+      >
+        <ion-item lines="none">
+          <ion-label> {{ entry.value.value.name }} </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="danger">
+            <ion-button fill="clear" (mousedown)="onRemove(entry.value.value)">
+              <ion-icon color="dark" name="trash-outline" />
+            </ion-button>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item-group>
+  </form>
+</ion-content>
