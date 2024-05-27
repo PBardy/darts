@@ -4,7 +4,25 @@
       <ion-back-button defaultHref="/games" />
     </ion-buttons>
     <ion-title>Game</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="options">
+        <ion-icon name="ellipsis-vertical-outline" />
+      </ion-button>
+      <ion-popover trigger="options" triggerAction="mousedown">
+        <ng-template>
+          <ion-list lines="none">
+            <ion-item button (mousedown)="onCancel()">
+              <ion-label>Cancel</ion-label>
+            </ion-item>
+          </ion-list>
+        </ng-template>
+      </ion-popover>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen> </ion-content>
+
+<ion-footer>
+  <app-keyboard (confirm)="onConfirm($event)" />
+</ion-footer>

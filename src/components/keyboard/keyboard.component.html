@@ -1,0 +1,46 @@
+<ion-grid class="grid grid-cols-3">
+  <ion-button class="text-2xl h-20" color="warning">
+    <ion-icon name="grid-outline" />
+  </ion-button>
+  <ion-input class="text-center text-2xl h-full" readonly [value]="value()" />
+  <ion-button class="text-2xl h-20" color="success" (mousedown)="onConfirm()">
+    <ion-icon name="checkmark-outline" />
+  </ion-button>
+  <ng-container *ngFor="let key of keys; let i = index">
+    <ng-container *ngIf="i % 2 === 0 && i < keys.length - 1">
+      <ion-button
+        class="text-2xl h-20"
+        expand="fill"
+        color="secondary"
+        (mousedown)="onAdd(keys[i + 0])"
+      >
+        {{ keys[i + 0] }}
+      </ion-button>
+      <ion-button
+        class="text-2xl h-20"
+        expand="fill"
+        color="secondary"
+        (mousedown)="onAdd(keys[i + 1])"
+      >
+        {{ keys[i + 1] }}
+      </ion-button>
+      <ion-button
+        class="text-2xl h-20"
+        expand="fill"
+        color="secondary"
+        (mousedown)="onAdd(keys[i + 2])"
+      >
+        {{ keys[i + 2] }}
+      </ion-button>
+    </ng-container>
+  </ng-container>
+  <ion-button class="text-2xl h-20" color="danger" (mousedown)="onClear()">
+    <ion-icon name="close-outline" />
+  </ion-button>
+  <ion-button class="text-2xl h-20" color="secondary" (mousedown)="onAdd(0)">
+    0
+  </ion-button>
+  <ion-button class="text-2xl h-20" color="warning" (mousedown)="onBack()">
+    <ion-icon name="backspace-outline" />
+  </ion-button>
+</ion-grid>
