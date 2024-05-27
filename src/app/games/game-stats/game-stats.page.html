@@ -1,7 +1,21 @@
 <ion-header translucent>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" />
+    </ion-buttons>
     <ion-title>Game Stats</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen> </ion-content>
+<ion-content fullscreen>
+  <ng-container *ngIf="gameService.game() as game">
+    <ion-list lines="none">
+      <ion-item-group *ngFor="let round of game.history">
+        <ion-item lines="none" *ngFor="let entry of round.scores | keyvalue">
+          <ion-label>{{ game.players[entry.key].name }}</ion-label>
+          <ion-label>{{ entry.value.total }}</ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </ng-container>
+</ion-content>

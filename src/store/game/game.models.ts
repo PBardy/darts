@@ -15,9 +15,6 @@ export type GameStub = {
 
 export type Game = GameStub & {
   id: EntityId;
-  set: number;
-  leg: number;
-  rnd: number;
   completedAt?: string;
   history: Round[];
   createdAt: string;

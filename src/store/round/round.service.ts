@@ -51,8 +51,50 @@ export class RoundService {
     return round;
   }
 
+  createSet(game: Game, round: Round, player: Player) {
+    const scores = structuredClone(round.scores);
+    const total = game.config.target;
+
+    // otherwise create a new set
+    scores[player.id].sets += 1;
+
+    const set = this.roundStore.addOne({
+      gid: game.id,
+      set: round.set + 1,
+      leg: 0,
+      rnd: 0,
+      prevRndId: round.id,
+      scores: mapObject(
+        scores,
+        (score) => ({ ...score, legs: 0, total }) satisfies Score,
+      ),
+    });
+
+    return set;
+  }
+
+  createLeg(game: Game, round: Round, player: Player) {
+    const scores = structuredClone(round.scores);
+    const total = game.config.target;
+    scores[player.id].legs += 1;
+
+    const leg = this.roundStore.addOne({
+      gid: game.id,
+      set: round.set,
+      leg: round.leg + 1,
+      rnd: 0,
+      prevRndId: round.id,
+      scores: mapObject(
+        scores,
+        (score) => ({ ...score, total }) satisfies Score,
+      ),
+    });
+
+    return leg;
+  }
+
   createRound(game: Game, current: Round, player: Player, score: number) {
-    const scores = current.scores;
+    const scores = structuredClone(current.scores);
     const currScore = scores[player.id];
     const nextScore = currScore.total - score;
     scores[player.id].total = nextScore;
@@ -66,54 +108,16 @@ export class RoundService {
       scores,
     });
 
-    // leg won
     if (nextScore === 0) {
-      const legs = currScore.legs + 1;
-      // set won
-      if (legs === game.config.legs) {
-        const sets = currScore.sets + 1;
-        // game won
-        if (sets === game.config.sets) {
+      if (currScore.legs + 1 === game.config.legs) {
+        if (currScore.sets + 1 === game.config.sets) {
           return null;
         }
 
-        // otherwise create a new set
-        scores[player.id].sets += 1;
-
-        const set = this.roundStore.addOne({
-          gid: game.id,
-          set: current.set + 1,
-          leg: 0,
-          rnd: 0,
-          prevRndId: round.id,
-          scores: mapObject(
-            scores,
-            (score) =>
-              ({ ...score, total: game.config.target }) satisfies Score,
-          ),
-        });
-
-        return set;
+        return this.createSet(game, round, player);
       }
 
-      // otherwise create a new leg
-      scores[player.id].legs += 1;
-
-      const leg = this.roundStore.addOne({
-        gid: game.id,
-        set: current.set,
-        leg: current.leg + 1,
-        rnd: 0,
-        prevRndId: round.id,
-        scores: mapObject(
-          scores,
-          (score) => ({ ...score, total: game.config.target }) satisfies Score,
-        ),
-      });
-
-      console.log(leg);
-
-      return leg;
+      return this.createLeg(game, round, player);
     }
 
     return round;

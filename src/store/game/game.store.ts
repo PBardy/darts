@@ -13,9 +13,6 @@ import { Game, GameStub } from './game.models';
 
 const factory = (overrides: Partial<Game> = {}): Game => ({
   id: nanoid(),
-  set: 0,
-  leg: 0,
-  rnd: 0,
   config: { sets: 1, legs: 1, target: 301 },
   players: {},
   history: [],

@@ -33,7 +33,7 @@ export const RoundStore = signalStore(
   withComputed(() => ({})),
   withMethods((s) => ({
     addOne(stub: RoundStub) {
-      const round = factory(stub);
+      const round = factory(structuredClone(stub));
       patchState(s, addEntity(round));
       return round;
     },
