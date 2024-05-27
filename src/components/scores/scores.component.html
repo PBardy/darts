@@ -1,0 +1,65 @@
+<ng-container *ngIf="gameService.game() as game">
+  <ng-container *ngIf="gameService.round() as round">
+    <ion-accordion-group lines="none">
+      <ng-container
+        *ngFor="let entry of round.scores | keyvalue; let i = index"
+      >
+        <ng-container
+          *ngIf="roundService.getScoreCheckouts(entry.value.total) as checkouts"
+        >
+          <ion-accordion toggleIconSlot="none">
+            <ion-item slot="header" lines="none">
+              <ion-label>
+                <ng-container *ngIf="gameService.player() as player">
+                  <div class="flex items-center gap-x-2">
+                    <ng-container
+                      *ngIf="player.id === entry.key; else inactive"
+                    >
+                      <div class="w-1 h-1 bg-green-500 rounded-full"></div>
+                    </ng-container>
+                    <ng-template #inactive>
+                      <div class="w-1 h-1 rounded-full transparent"></div>
+                    </ng-template>
+                    <span>{{ game.players[entry.key].name }}</span>
+                  </div>
+                </ng-container>
+              </ion-label>
+              <ion-label slot="end">
+                <div class="flex items-center gap-x-2">
+                  <div class="flex items-center">
+                    <ion-chip>{{ entry.value.sets }}</ion-chip>
+                    <ion-chip>{{ entry.value.legs }}</ion-chip>
+                  </div>
+                  <ng-container *ngIf="entry.value.total <= 170; else normal">
+                    <ng-container *ngIf="checkouts.length; else bogey">
+                      <ion-label color="success">
+                        {{ entry.value.total }}
+                      </ion-label>
+                    </ng-container>
+                    <ng-template #bogey>
+                      <ion-label color="danger">
+                        {{ entry.value.total }}
+                      </ion-label>
+                    </ng-template>
+                  </ng-container>
+                  <ng-template #normal>
+                    <ion-label slot="end">
+                      {{ entry.value.total }}
+                    </ion-label>
+                  </ng-template>
+                </div>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" slot="content">
+              <ion-label *ngIf="entry.value.total <= 170 && checkouts.length">
+                <ion-chip color="success" *ngFor="let checkout of checkouts">
+                  {{ checkout }}
+                </ion-chip>
+              </ion-label>
+            </ion-item>
+          </ion-accordion>
+        </ng-container>
+      </ng-container>
+    </ion-accordion-group>
+  </ng-container>
+</ng-container>

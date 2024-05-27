@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { gameExists } from '@store/game';
 import { GameEditPage } from './game-edit/game-edit.page';
 import { GameNewPage } from './game-new/game-new.page';
 import { GameStatsPage } from './game-stats/game-stats.page';
@@ -10,6 +11,7 @@ export const gameRoutes: Routes = [
   { path: 'new', pathMatch: 'full', component: GameNewPage },
   {
     path: ':gid',
+    canActivate: [gameExists],
     children: [
       {
         path: '',

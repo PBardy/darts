@@ -45,14 +45,13 @@
       </ion-item>
     </ion-item-group>
     <ion-item-group formGroupName="players">
-      <ion-item lines="none">
+      <ion-item button lines="none" (mousedown)="onAdd()">
         <ion-label class="ion-text-uppercase">Players</ion-label>
         <ion-button
           class="ion-no-padding ion-no-margin"
           color="dark"
           fill="clear"
           slot="end"
-          (mousedown)="onAdd()"
         >
           <ion-icon icon="icons-only" name="add-outline" />
         </ion-button>

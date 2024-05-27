@@ -1,5 +1,6 @@
 import { EntityId } from '@ngrx/signals/entities';
 import { Player } from '@store/player/player.models';
+import { Round } from '@store/round';
 
 export type GameConfig = {
   sets: number;
@@ -17,6 +18,8 @@ export type Game = GameStub & {
   set: number;
   leg: number;
   rnd: number;
+  completedAt?: string;
+  history: Round[];
   createdAt: string;
   updatedAt: string;
 };

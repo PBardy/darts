@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { ActionSheetController, IonicModule } from '@ionic/angular';
 import { GameStore } from '@store/game';
 import { Player, PlayerStore } from '@store/player';
+import { RoundStore } from '@store/round';
+import { RoundService } from '@store/round/round.service';
 import { addIcons } from 'ionicons';
 import { addOutline, trashOutline } from 'ionicons/icons';
 import { chain, difference, values } from 'underscore';
@@ -31,11 +33,13 @@ export class GameNewPage {
   fb = inject(FormBuilder);
   router = inject(Router);
   gameStore = inject(GameStore);
+  roundStore = inject(RoundStore);
+  roundService = inject(RoundService);
   playerStore = inject(PlayerStore);
   actionSheet = inject(ActionSheetController);
 
   form = this.fb.group({
-    config: this.fb.group({
+    config: this.fb.nonNullable.group({
       sets: this.fb.nonNullable.control(1, [
         Validators.required,
         Validators.min(1),
@@ -76,7 +80,9 @@ export class GameNewPage {
     const action = await sheet.onDidDismiss();
     const player = action.data;
 
-    this.players.addControl(player.id, this.fb.nonNullable.control(player));
+    if (player) {
+      this.players.addControl(player.id, this.fb.nonNullable.control(player));
+    }
   }
 
   onRemove(player: Player) {
@@ -86,6 +92,7 @@ export class GameNewPage {
   onSubmit() {
     if (this.form.valid) {
       const game = this.gameStore.addOne(this.form.getRawValue());
+      this.roundService.createInitialRound(game);
       this.router.navigate(['games', game.id]);
     }
   }
