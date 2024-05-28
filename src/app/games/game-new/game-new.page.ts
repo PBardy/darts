@@ -1,5 +1,5 @@
 import { CommonModule, KeyValuePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PressDirective } from '@directives/press/press.directive';
 import { ActionSheetController, IonicModule } from '@ionic/angular';
 import { GameStore } from '@store/game';
 import { Player, PlayerStore } from '@store/player';
@@ -27,10 +28,12 @@ addIcons({ addOutline, trashOutline });
     FormsModule,
     ReactiveFormsModule,
     KeyValuePipe,
+    PressDirective,
   ],
 })
 export class GameNewPage {
   fb = inject(FormBuilder);
+  cdr = inject(ChangeDetectorRef);
   router = inject(Router);
   gameStore = inject(GameStore);
   roundStore = inject(RoundStore);
@@ -67,7 +70,7 @@ export class GameNewPage {
     return this.form.controls.players;
   }
 
-  async onAdd() {
+  async onAddPlayers() {
     const sheet = await this.actionSheet.create({
       header: 'Add Player',
       buttons: chain(
@@ -82,11 +85,17 @@ export class GameNewPage {
 
     if (player) {
       this.players.addControl(player.id, this.fb.nonNullable.control(player));
+      this.cdr.detectChanges();
     }
   }
 
-  onRemove(player: Player) {
+  onEditPlayers() {
+    this.router.navigate(['games', 'new', 'players']);
+  }
+
+  onRemovePlayers(player: Player) {
     this.players.removeControl(player.id as unknown as never);
+    this.cdr.detectChanges();
   }
 
   onSubmit() {

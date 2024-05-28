@@ -48,7 +48,13 @@
       </ion-item>
     </ion-item-group>
     <ion-item-group formGroupName="players">
-      <ion-item button lines="none" (mousedown)="onAdd()">
+      <ion-item
+        appPress
+        button
+        lines="none"
+        (shortpress)="onAddPlayers()"
+        (longpress)="onEditPlayers()"
+      >
         <ion-label class="ion-text-uppercase">Players</ion-label>
         <ion-button
           class="ion-no-padding ion-no-margin"
@@ -67,7 +73,10 @@
         </ion-item>
         <ion-item-options>
           <ion-item-option color="danger">
-            <ion-button fill="clear" (mousedown)="onRemove(entry.value.value)">
+            <ion-button
+              fill="clear"
+              (mousedown)="onRemovePlayers(entry.value.value)"
+            >
               <ion-icon color="dark" name="trash-outline" />
             </ion-button>
           </ion-item-option>

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { PlayerStore } from '@store/player';
 
 @Component({
@@ -19,6 +19,7 @@ export class PlayerNewPage {
   fb = inject(FormBuilder);
   router = inject(Router);
   playerStore = inject(PlayerStore);
+  navController = inject(NavController);
 
   form = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control('', [Validators.required]),

@@ -12,7 +12,7 @@
   </ion-toolbar>
   <ion-toolbar *ngIf="playerStore.selected().length === 0">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" />
+      <ion-back-button (mousedown)="navController.back()" />
     </ion-buttons>
     <ion-title>Players</ion-title>
   </ion-toolbar>

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { PlayerService, PlayerStore } from '@store/player';
 
@@ -22,6 +22,7 @@ export class PlayerEditPage {
   router = inject(Router);
   playerStore = inject(PlayerStore);
   playerService = inject(PlayerService);
+  navController = inject(NavController);
 
   form = computed(() =>
     this.fb.group({

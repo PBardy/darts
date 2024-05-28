@@ -8,7 +8,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PressDirective } from '@directives/press/press.directive';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { Player, PlayerStore } from '@store/player';
 import { addIcons } from 'ionicons';
 import {
@@ -30,6 +30,7 @@ export class PlayersPage {
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
   playerStore = inject(PlayerStore);
+  navController = inject(NavController);
 
   onShortPress(player: Player, event: MouseEvent | null) {
     this.playerStore.selected().length > 0
