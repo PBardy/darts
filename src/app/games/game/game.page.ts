@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { KeyboardComponent } from '@components/keyboard/keyboard.component';
 import { ScoresComponent } from '@components/scores/scores.component';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule, NavController } from '@ionic/angular';
 import { GameService } from '@store/game';
 import { RoundService } from '@store/round/round.service';
 import { addIcons } from 'ionicons';
@@ -27,6 +27,7 @@ export class GamePage {
   router = inject(Router);
   gameService = inject(GameService);
   roundService = inject(RoundService);
+  navController = inject(NavController);
   alertController = inject(AlertController);
 
   onCancel() {}

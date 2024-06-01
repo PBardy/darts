@@ -1,9 +1,9 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" />
-    </ion-buttons>
     <ion-title>Game Stats</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (mousedown)="onContinue()">Continue</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -55,9 +55,3 @@
     </ion-list>
   </ng-container>
 </ion-content>
-
-<ion-footer>
-  <ion-button shape="round" expand="fill" (mousedown)="onContinue()">
-    Continue
-  </ion-button>
-</ion-footer>

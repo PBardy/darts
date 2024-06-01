@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
   templateUrl: './game-edit.page.html',
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class GameEditPage {}
+export class GameEditPage {
+  navController = inject(NavController);
+}

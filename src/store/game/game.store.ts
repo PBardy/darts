@@ -1,4 +1,11 @@
-import { patchState, signalStore, withMethods } from '@ngrx/signals';
+import { computed } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import {
   EntityId,
   addEntity,
@@ -9,22 +16,51 @@ import {
 } from '@ngrx/signals/entities';
 import { Round } from '@store/round';
 import { nanoid } from 'nanoid';
-import { Game, GameStub } from './game.models';
+import { chain, values } from 'underscore';
+import { Game, GameState, GameStub } from './game.models';
 
-const factory = (overrides: Partial<Game> = {}): Game => ({
-  id: nanoid(),
-  config: { sets: 1, legs: 1, target: 301 },
-  players: {},
-  history: [],
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  completedAt: undefined,
-  ...overrides,
-});
+const setTitle = (game: Game): Game => {
+  game.title = values(game.players)
+    .map((player) => player.name)
+    .join(' vs ');
+
+  return game;
+};
+
+const factory = (overrides: Partial<Game> = {}): Game => {
+  const game = {
+    id: nanoid(),
+    title: '',
+    config: { sets: 1, legs: 1, target: 301 },
+    players: {},
+    history: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    completedAt: undefined,
+    ...overrides,
+  };
+
+  setTitle(game);
+
+  return game;
+};
+
+const gameInitialState: GameState = {
+  filter: '',
+  selected: [],
+};
 
 export const GameStore = signalStore(
   { providedIn: 'root' },
   withEntities<Game>(),
+  withState(gameInitialState),
+  withComputed((store) => ({
+    filtered: computed(() =>
+      chain(store.entities())
+        .filter((game) => game.title.toLowerCase().includes(store.filter()))
+        .value(),
+    ),
+  })),
   withMethods((s) => ({
     addOne(stub: GameStub) {
       const game = factory(stub);

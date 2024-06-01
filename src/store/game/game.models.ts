@@ -15,10 +15,14 @@ export type GameStub = {
 
 export type Game = GameStub & {
   id: EntityId;
+  title: string;
   completedAt?: string;
   history: Round[];
   createdAt: string;
   updatedAt: string;
 };
 
-export type GameState = {};
+export type GameState = {
+  filter: string;
+  selected: string[];
+};

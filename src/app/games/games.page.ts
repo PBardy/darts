@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
+import { GameStore } from '@store/game';
 
 @Component({
   templateUrl: './games.page.html',
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class GamesPage {}
+export class GamesPage {
+  gameStore = inject(GameStore);
+  navController = inject(NavController);
+}

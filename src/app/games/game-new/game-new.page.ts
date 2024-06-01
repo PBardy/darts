@@ -8,14 +8,19 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PressDirective } from '@directives/press/press.directive';
-import { ActionSheetController, IonicModule } from '@ionic/angular';
+import {
+  ActionSheetController,
+  AlertController,
+  IonicModule,
+  NavController,
+} from '@ionic/angular';
 import { GameStore } from '@store/game';
 import { Player, PlayerStore } from '@store/player';
 import { RoundStore } from '@store/round';
 import { RoundService } from '@store/round/round.service';
 import { addIcons } from 'ionicons';
 import { addOutline, trashOutline } from 'ionicons/icons';
-import { chain, difference, values } from 'underscore';
+import { chain, difference, size, values } from 'underscore';
 
 addIcons({ addOutline, trashOutline });
 
@@ -40,6 +45,8 @@ export class GameNewPage {
   roundService = inject(RoundService);
   playerStore = inject(PlayerStore);
   actionSheet = inject(ActionSheetController);
+  navController = inject(NavController);
+  alertController = inject(AlertController);
 
   form = this.fb.group({
     config: this.fb.nonNullable.group({
@@ -98,7 +105,19 @@ export class GameNewPage {
     this.cdr.detectChanges();
   }
 
-  onSubmit() {
+  async onSubmit() {
+    if (size(this.players.value) < 2) {
+      const alert = await this.alertController.create({
+        header: 'Invalid',
+        message: 'At least 2 players are required',
+        buttons: ['OK'],
+      });
+
+      await alert.present();
+
+      return;
+    }
+
     if (this.form.valid) {
       const game = this.gameStore.addOne(this.form.getRawValue());
       this.roundService.createInitialRound(game);

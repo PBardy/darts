@@ -7,4 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen> </ion-content>
+<ion-content fullscreen>
+  <div class="grid grid-cols-2">
+    <ion-button
+      color="light"
+      (mousedown)="router.navigate(['statistics', 'overall'])"
+    >
+      <div class="flex flex-col items-center py-12 gap-y-2">
+        <ion-icon class="text-4xl" name="bar-chart-outline" />
+        <ion-label class="text-lg font-semibold">Overall</ion-label>
+      </div>
+    </ion-button>
+    <ion-button
+      color="light"
+      (mousedown)="router.navigate(['statistics', 'rankings'])"
+    >
+      <div class="flex flex-col items-center py-12 gap-y-2">
+        <ion-icon class="text-4xl" name="people-outline" />
+        <ion-label class="text-lg font-semibold">Rankings</ion-label>
+      </div>
+    </ion-button>
+  </div>
+</ion-content>
