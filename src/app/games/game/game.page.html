@@ -1,9 +1,12 @@
 <ion-header translucent>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (mousedown)="navController.back()" />
+      <ion-back-button
+        data-testid="game-page--back-button"
+        (mousedown)="navController.back()"
+      />
     </ion-buttons>
-    <ion-title>Game</ion-title>
+    <ion-title data-testid="game-page--title">Game</ion-title>
     <ion-buttons slot="end">
       <ion-button id="options">
         <ion-icon name="ellipsis-vertical-outline" />
@@ -11,7 +14,11 @@
       <ion-popover trigger="options" triggerAction="mousedown">
         <ng-template>
           <ion-list lines="none">
-            <ion-item button (mousedown)="onCancel()">
+            <ion-item
+              button
+              data-testid="game-page--cancel-button"
+              (mousedown)="onCancel()"
+            >
               <ion-label>Cancel</ion-label>
             </ion-item>
           </ion-list>
